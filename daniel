@@ -1,0 +1,240 @@
+index.html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Uma prova de Amor pra vc FeFe❤️</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background-color: #000; color: white; overflow: hidden; }
+    .tela { display: none; position: absolute; width: 100%; height: 100%; text-align: center; padding-top: 10%; padding-left: 5%; padding-right: 5%; }
+    .active { display: block; }
+    button {
+      padding: 15px 30px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .start-btn { background-color: #ff2d75; color: white; box-shadow: 0 0 10px #ff2d75; }
+    .music-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background-color: #ff2d75;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+    .heart {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: red;
+      transform: rotate(45deg);
+      animation: fall linear infinite;
+      opacity: 0.8;
+      z-index: 0;
+    }
+    .heart::before, .heart::after {
+      content: '';
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: red;
+      border-radius: 50%;
+    }
+    .heart::before { top: -7.5px; left: 0; }
+    .heart::after { left: -7.5px; top: 0; }
+    @keyframes fall {
+      0% { transform: translateY(-10%) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(45deg); opacity: 0; }
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      justify-items: center;
+      padding: 20px;
+    }
+    .card {
+      width: 60px;
+      height: 60px;
+      background: #fff;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    /* Aqui tirei o display none e deixei o iframe invisível e bem pequeno */
+    iframe#player {
+      width: 1px;
+      height: 1px;
+      border: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      opacity: 0.01;
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="music-btn" onclick="tocarMusica()" id="btnMusica">Tocar música 🎶</button>
+  <iframe
+    id="player"
+    width="1"
+    height="1"
+    scrolling="no"
+    frameborder="no"
+    allow="autoplay"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/siteluandaily/chuva-de-arroz-luan-santana&color=%23ff5500&auto_play=false&loop=true"
+  ></iframe>
+
+  <div class="tela active" id="tela1">
+    <h1>Clique aqui para começar</h1>
+    <button class="start-btn" onclick="irParaTela2()">Começar</button>
+  </div>
+
+  <div class="tela" id="tela2">
+    <h1>Isso é para você meu amor... 💖</h1>
+  </div>
+
+  <div class="tela" id="tela3">
+    <div style="padding: 0 10vw; line-height: 1.6; text-align: center;">
+      <p>Desde que você entrou na minha vida, tudo ficou mais bonito.</p>
+      <p>Você é a pessoa mais incrível que já conheci.</p>
+      <p>Meu amor, você é o motivo de eu acordar todos os dias para ir pra escola, vc foi o motivo de eu nao ter desistido.</p>
+      <p>Eu amo seu cheiro, seu cabelo, seus olhinhos e o seu sorriso.</p>
+      <p>Amo você por completo, minha princesa.</p>
+      <p>Sei que você teve medo de eu não te esperar,</p>
+      <p>mas eu repito: eu espero 30 anos se for presciso.</p>
+      <p>Você é a mulher com quem eu quero me casar Fernanda.</p>
+      <p>Cada momento ao seu lado é especial.</p>
+      <p>Não é só amor...</p>
+      <p>É admiração, carinho, vontade de construir uma família contigo.</p>
+      <p>Você me atrai como ninguém.</p>
+      <p>Seu jeitinho é perfeito.</p>
+      <p><strong>Eu te amo mil milhões. Para sempre. 💌</strong></p>
+      <button class="start-btn" onclick="mostrarTela('tela4')">Avançar</button>
+    </div>
+  </div>
+
+  <div class="tela" id="tela4">
+    <h1>🌟 Jogo da Memória 🌟</h1>
+    <p style="margin-bottom: 20px;">Vms testar essa memoria skskks 💘</p>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div class="tela" id="tela5">
+    <h1>EU TE AMOOOOOOOOOO! ❤️</h1>
+    <p>Para sempre seu, eu quero passar o resto do meus dias com vc, espero que tenha gostado fiz com muito carinho!</p>
+  </div>
+
+  <script>
+    let chuvaIniciada = false;
+
+    function irParaTela2() {
+      mostrarTela('tela2');
+      if (!chuvaIniciada) {
+        iniciarChuva();
+        chuvaIniciada = true;
+      }
+      setTimeout(() => mostrarTela('tela3'), 3000);
+    }
+
+    function mostrarTela(id) {
+      document.querySelectorAll('.tela').forEach(t => t.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if (id === 'tela4') initJogo();
+    }
+
+    function iniciarChuva() {
+      setInterval(() => {
+        const h = document.createElement('div');
+        h.classList.add('heart');
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 5000);
+      }, 200);
+    }
+
+    function tocarMusica() {
+      const iframe = document.getElementById("player");
+      iframe.contentWindow.postMessage('{"method":"play"}', '*');
+      document.getElementById("btnMusica").style.display = "none";
+    }
+
+    // Jogo da memória
+    const emojis = ['💖', '💘', '💕', '💝', '💗', '💓', '💞', '❤️'];
+    let cards = [...emojis, ...emojis];
+    let firstCard = null;
+    let secondCard = null;
+    let lock = false;
+
+    function initJogo() {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      shuffle(cards);
+      cards.forEach((emoji, index) => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.dataset.emoji = emoji;
+        div.dataset.index = index;
+        div.textContent = '❓';
+        div.onclick = () => flipCard(div);
+        grid.appendChild(div);
+      });
+    }
+
+    function flipCard(card) {
+      if (lock || card.textContent !== '❓') return;
+
+      card.textContent = card.dataset.emoji;
+
+      if (!firstCard) {
+        firstCard = card;
+      } else {
+        secondCard = card;
+        lock = true;
+
+        if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+          firstCard = null;
+          secondCard = null;
+          lock = false;
+          if ([...document.querySelectorAll('.card')].every(c => c.textContent !== '❓')) {
+            setTimeout(() => mostrarTela('tela5'), 1000);
+          }
+        } else {
+          setTimeout(() => {
+            firstCard.textContent = '❓';
+            secondCard.textContent = '❓';
+            firstCard = null;
+            secondCard = null;
+            lock = false;
+          }, 1000);
+        }
+      }
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+  </script>
+</body>
+</html>
